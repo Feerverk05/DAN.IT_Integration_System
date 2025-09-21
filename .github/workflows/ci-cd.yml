@@ -54,19 +54,22 @@ jobs:
     - name: Build application
       run: npm run build
       
-    - name: Deploy to Railway
-      uses: railwayapp/railway-deploy@v1
+    - name: Deploy to Cyclic
+      uses: cyclic-software/cyclic-deploy@v1
       with:
-        railway-token: ${{ secrets.RAILWAY_TOKEN }}
-        service: ${{ secrets.RAILWAY_SERVICE }}
+        cyclic-token: ${{ secrets.CYCLIC_TOKEN }}
+        cyclic-app-name: ${{ secrets.CYCLIC_APP_NAME }}
         
-    - name: Deploy to Heroku (Alternative)
-      if: false  # Set to true if using Heroku instead of Railway
-      uses: akhileshns/heroku-deploy@v3.12.14
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v2.0
       with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-        heroku_email: ${{ secrets.HEROKU_EMAIL }}
-        usedocker: false
-        appdir: "."
-        procfile: "web: npm start"
+        publish-dir: './dist'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
