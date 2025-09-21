@@ -54,12 +54,6 @@ jobs:
     - name: Build application
       run: npm run build
       
-    - name: Deploy to Cyclic
-      uses: cyclic-software/cyclic-deploy@v1
-      with:
-        cyclic-token: ${{ secrets.CYCLIC_TOKEN }}
-        cyclic-app-name: ${{ secrets.CYCLIC_APP_NAME }}
-        
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v2.0
       with:
